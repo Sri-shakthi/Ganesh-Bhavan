@@ -181,11 +181,10 @@ export default function RecipePage() {
           <div className="text-center mb-8">
             <h2 className="text-green-700 text-3xl md:text-4xl mb-4 font-bold">Submit Your Recipe</h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Fill out the form below to share your unique recipe with us. If selected, you'll receive exciting rewards!
+              Click the button below to open our Google Form and share your unique recipe with us.
             </p>
           </div>
           <RecipeForm 
-            restaurantWhatsApp={config.restaurantWhatsApp} 
             googleFormId={config.forms.recipe}
           />
         </div>
@@ -193,4 +192,3 @@ export default function RecipePage() {
     </div>
   );
 }
-

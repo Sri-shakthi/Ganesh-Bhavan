@@ -1,4 +1,5 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { buildGoogleFormUrl, config } from "../config";
 
 export default function MenuPage() {
   const menuCategories = [
@@ -169,9 +170,14 @@ export default function MenuPage() {
           <p className="text-white/90 text-xl mb-6">
             Get these delicious meals delivered to your door every day!
           </p>
-          <button className="bg-yellow-400 text-gray-900 px-8 py-4 rounded-full hover:bg-yellow-500 transition-all shadow-lg">
+          <a
+            href={buildGoogleFormUrl(config.forms.subscription)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-yellow-400 text-gray-900 px-8 py-4 rounded-full hover:bg-yellow-500 transition-all shadow-lg inline-block"
+          >
             Start Your Subscription
-          </button>
+          </a>
         </div>
       </div>
     </div>

@@ -1,30 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Utensils, Clock, Award, Heart, Sparkles, ArrowRight, CheckCircle, Calendar, Truck, ChefHat } from "lucide-react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  type CarouselApi,
-} from "./ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
+import DomeGallery from "./DomeGallery";
 import "./HomePage.css";
+import { buildGoogleFormUrl, config } from "../config";
 
 interface HomePageProps {
-  onNavigateToSubscription: () => void;
   onNavigateToOffers: () => void;
-  onNavigateToCatering?: () => void;
-  onNavigateToVendor?: () => void;
-  onNavigateToRecipe?: () => void;
 }
 
 export default function HomePage({ 
-  onNavigateToSubscription, 
   onNavigateToOffers,
-  onNavigateToCatering,
-  onNavigateToVendor,
-  onNavigateToRecipe,
 }: HomePageProps) {
-  const [api, setApi] = useState<CarouselApi>();
+  const [api, setApi] = useState(null);
+  const googleFormUrls = {
+    subscription: buildGoogleFormUrl(config.forms.subscription),
+    catering: buildGoogleFormUrl(config.forms.catering),
+    vendor: buildGoogleFormUrl(config.forms.vendor),
+    recipe: buildGoogleFormUrl(config.forms.recipe),
+  };
   
   useEffect(() => {
     if (!api) {
@@ -102,12 +97,14 @@ export default function HomePage({
               Subscribe to our daily meal service and enjoy restaurant-quality food at home. Choose from our diverse weekly menus.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={onNavigateToSubscription}
-                className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 px-8 py-4 rounded-full hover:from-yellow-500 hover:to-yellow-600 transition-all shadow-lg"
+              <a
+                href={googleFormUrls.subscription}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 px-8 py-4 rounded-full hover:from-yellow-500 hover:to-yellow-600 transition-all shadow-lg text-center"
               >
                 Subscribe Now
-              </button>
+              </a>
               <button className="bg-white/10 backdrop-blur-sm text-white border-2 border-white px-8 py-4 rounded-full hover:bg-white/20 transition-all">
                 View Menu
               </button>
@@ -211,7 +208,7 @@ export default function HomePage({
             <div>
               <h2 className="text-white text-4xl md:text-5xl mb-6 font-bold">
                 Daily Meal Subscription Service
-              </h2>
+          </h2>
               <p className="text-white/90 text-lg md:text-xl mb-6">
                 Experience the convenience of having authentic South Indian vegetarian meals delivered fresh to your doorstep every day. Our subscription service brings the flavors of Ganesh Bhavan directly to your home.
               </p>
@@ -250,18 +247,21 @@ export default function HomePage({
                 </div>
               </div>
 
-              <button
-                onClick={onNavigateToSubscription}
-                className="bg-yellow-400 text-gray-900 px-10 py-4 rounded-full hover:bg-yellow-500 transition-all shadow-lg font-semibold text-lg"
-              >
-                Start Your Subscription
-              </button>
+          <a
+            href={googleFormUrls.subscription}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-yellow-400 text-gray-900 px-10 py-4 rounded-full hover:bg-yellow-500 transition-all shadow-lg font-semibold text-lg text-center"
+          >
+            Start Your Subscription
+          </a>
             </div>
-            <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800"
+            <div>
+              <img
+                src="https://ik.imagekit.io/qbnsahjpu/assets/Ganesh%20Bhavan/lunch.png"
                 alt="Meal subscription"
                 className="w-full h-full object-cover"
+                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
               />
             </div>
           </div>
@@ -276,16 +276,14 @@ export default function HomePage({
             opts={{
               align: "start",
               loop: true,
+              duration: 35,
+              dragFree: true,
             }}
             setApi={setApi}
             className="w-full"
           >
             <CarouselContent className="-ml-2 md:-ml-4">
               {[
-                {
-                  src: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&auto=format&fit=crop&q=80",
-                  alt: "South Indian Thali",
-                },
                 {
                   src: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=800&auto=format&fit=crop&q=80",
                   alt: "Masala Dosa",
@@ -294,41 +292,38 @@ export default function HomePage({
                   src: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800&auto=format&fit=crop&q=80",
                   alt: "Sambar and Rice",
                 },
+                {
+                  src: "https://images.unsplash.com/photo-1694849789325-914b71ab4075?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  alt: "Vegetable Biryani",
+                },
                 // {
-                //   src: "https://images.unsplash.com/photo-1616632125404-33e2addbff09?w=800&auto=format&fit=crop&q=80",
-                //   alt: "Vegetable Biryani",
-                // },
-                // {
-                //   src: "https://images.unsplash.com/photo-1626645738192-c2a7b4d5ba3c?w=800&auto=format&fit=crop&q=80",
+                //   src: "https://images.unsplash.com/photo-1742281258189-3b933879867a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8",
                 //   alt: "Idli with Sambar",
                 // },
-                // {
-                //   src: "https://images.unsplash.com/photo-1728745118618-941ec839208f?w=800&auto=format&fit=crop&q=80",
-                //   alt: "Vegetable Curry",
-                // },
-                // {
-                //   src: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&auto=format&fit=crop&q=80",
-                //   alt: "Rasam",
-                // },
-                // {
-                //   src: "https://images.unsplash.com/photo-1698653223689-24b0bfd5150b?w=800&auto=format&fit=crop&q=80",
-                //   alt: "Payasam",
-                // },
                 {
-                  src: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&auto=format&fit=crop&q=80",
-                  alt: "Uttapam",
+                  src: "https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  alt: "Vegetable Curry",
                 },
                 {
-                  src: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=800&auto=format&fit=crop&q=80",
-                  alt: "Pongal",
+                  src: "https://images.unsplash.com/photo-1633383718081-22ac93e3db65?q=80&w=1516&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  alt: "Rasam",
+                },
+                {
+                  src: "https://images.unsplash.com/photo-1559561724-732dbca7be1e?q=80&w=930&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  alt: "Payasam",
+                },
+                {
+                  src: "https://images.unsplash.com/photo-1714611446765-3e85644ea4ae?q=80&w=654&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  alt: "Uttapam",
                 },
               ].map((item, index) => (
                 <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-                  <div className="relative h-80 rounded-xl overflow-hidden group">
+                  <div className="relative w-full h-80 rounded-xl overflow-hidden group" style={{ minHeight: '320px', backgroundSize: 'cover', minWidth: '420px', maxHeight: '320px', maxWidth: '320px' }}>
                     <ImageWithFallback
                       src={item.src}
                       alt={item.alt}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-in-out"
+                      style={{ width: '100%', height: '320px', objectFit: 'cover' }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       {/* <div className="absolute bottom-4 left-4 right-4">
@@ -340,6 +335,50 @@ export default function HomePage({
               ))}
             </CarouselContent>
           </Carousel>
+        </div>
+      </section>
+
+      {/* Meet our Happy Customers - Dome Gallery */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-green-700 text-4xl md:text-5xl font-bold mb-4">Meet our Happy Customers</h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              See what our valued customers have to say about their experience with Ganesh Bhavan
+            </p>
+          </div>
+          <div style={{ width: '100%', height: '600px' }}>
+            <DomeGallery 
+              images={[
+                { src: 'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=800&auto=format&fit=crop&q=80', alt: 'Masala Dosa' },
+                { src: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800&auto=format&fit=crop&q=80', alt: 'Sambar and Rice' },
+                { src: 'https://images.unsplash.com/photo-1694849789325-914b71ab4075?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Vegetable Biryani' },
+                { src: 'https://images.unsplash.com/photo-1742281258189-3b933879867a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8', alt: 'Idli with Sambar' },
+                { src: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Vegetable Curry' },
+                { src: 'https://images.unsplash.com/photo-1633383718081-22ac93e3db65?q=80&w=1516&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Rasam' },
+                { src: 'https://images.unsplash.com/photo-1559561724-732dbca7be1e?q=80&w=930&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Payasam' },
+                { src: 'https://images.unsplash.com/photo-1714611446765-3e85644ea4ae?q=80&w=654&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Uttapam' },
+                { src: 'https://images.unsplash.com/photo-1551218372-a8789b81b253?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Recipe sharing' },
+                { src: 'https://plus.unsplash.com/premium_photo-1682092039530-584ae1d9da7f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8SU5ESUFOJTIwcGVvcGxlfGVufDB8fDB8fHww', alt: 'Vendor partnership' },
+                { src: 'https://images.unsplash.com/photo-1534235187448-833893dfe3e0?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fElORElBTiUyMHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D', alt: 'Vendor partnership' },
+                { src: 'https://images.unsplash.com/photo-1524081081171-7960da1de373?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fElORElBTiUyMHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D', alt: 'Vendor partnership' },
+                { src: 'https://plus.unsplash.com/premium_photo-1722682239201-21c8173e776b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjV8fElORElBTiUyMHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D', alt: 'Vendor partnership' },
+                { src: 'https://images.unsplash.com/photo-1641877953739-8cab85119201?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fElORElBTiUyMHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D', alt: 'Vendor partnership' },
+                { src: 'https://images.unsplash.com/photo-1641279676778-3c94588147fd?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDZ8fElORElBTiUyMHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D', alt: 'Vendor partnership' },
+                { src: 'https://plus.unsplash.com/premium_photo-1682096111256-e020381ec730?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDl8fElORElBTiUyMHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D', alt: 'Vendor partnership' },
+                { src: 'https://images.unsplash.com/photo-1622182473147-579eab905ef9?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzR8fElORElBTiUyMHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D', alt: 'Vendor partnership' },
+                { src: 'https://plus.unsplash.com/premium_photo-1661730060591-5d554b20584e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTA1fHxJTkRJQU4lMjBwZW9wbGV8ZW58MHx8MHx8fDA%3D', alt: 'Vendor partnership' },
+                { src: 'https://plus.unsplash.com/premium_photo-1682089894837-e01e5cb8e471?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTQ5fHxJTkRJQU4lMjBwZW9wbGV8ZW58MHx8MHx8fDA%3D', alt: 'Vendor partnership' },
+                { src: 'https://images.unsplash.com/photo-1697305593250-b210b2bbb3d8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTcxfHxJTkRJQU4lMjBwZW9wbGV8ZW58MHx8MHx8fDA%3D', alt: 'Vendor partnership' },
+                { src: 'https://plus.unsplash.com/premium_photo-1682090811844-e0a89fb2c780?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTc2fHxJTkRJQU4lMjBwZW9wbGV8ZW58MHx8MHx8fDA%3D', alt: 'Vendor partnership' },
+                { src: 'https://images.unsplash.com/photo-1582797536372-862bb193b69a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjAyfHxJTkRJQU4lMjBwZW9wbGV8ZW58MHx8MHx8fDA%3D', alt: 'Vendor partnership' },
+                { src: 'https://images.unsplash.com/photo-1743757452137-e75485da5b21?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjM3fHxJTkRJQU4lMjBwZW9wbGV8ZW58MHx8MHx8fDA%3D', alt: 'Vendor partnership' },
+
+              ]}
+              grayscale={false}
+              overlayBlurColor="#ffffff"
+            />
+          </div>
         </div>
       </section>
 
@@ -355,11 +394,11 @@ export default function HomePage({
 
           <div className="space-y-16">
             {/* Catering Service Panel */}
-            <div className="bg-white rounded-2xl overflow-hidden shadow-xl" style={{ marginBottom: '50px' }}>
+            <div className="bg-white rounded-2xl overflow-hidden shadow-xl" style={{ marginBottom: '80px' }}>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 <div className="relative h-80 lg:h-auto">
-                  <ImageWithFallback
-                    src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800"
+              <ImageWithFallback
+                    src="https://images.unsplash.com/photo-1758810741375-0fea503c9cbd?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Catering service"
                     className="w-full h-full object-cover img-services"
                   />
@@ -405,19 +444,21 @@ export default function HomePage({
                       <span className="text-gray-700">Any Event Size</span>
                     </div>
                   </div>
-                  <button
-                    onClick={onNavigateToCatering}
+                  <a
+                    href={googleFormUrls.catering}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-4 rounded-lg hover:from-green-700 hover:to-green-800 transition-all flex items-center justify-center gap-2 font-semibold text-lg w-full sm:w-auto"
                   >
                     Learn More & Request Quote
                     <ArrowRight size={20} />
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
 
             {/* Recipe Submission Panel */}
-            <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl overflow-hidden shadow-xl border-2 border-yellow-200"  style={{ marginBottom: '50px' }}>
+            <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl overflow-hidden shadow-xl border-2 border-yellow-200"  style={{ marginBottom: '80px' }}>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 <div className="p-8 md:p-12 flex flex-col justify-center order-2 lg:order-1">
                   <div className="flex items-center gap-3 mb-4">
@@ -460,17 +501,20 @@ export default function HomePage({
                       <span className="text-gray-700">Help Others Discover</span>
                     </div>
                   </div>
-                  <button
-                    onClick={onNavigateToRecipe}
-                    className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-8 py-4 rounded-lg hover:from-yellow-600 hover:to-orange-600 transition-all flex items-center justify-center gap-2 font-semibold text-lg w-full sm:w-auto"
+                  <a
+                    href={googleFormUrls.recipe}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-4 rounded-lg hover:from-green-700 hover:to-green-800 transition-all flex items-center justify-center gap-2 font-semibold text-lg w-full sm:w-auto"
+                    style={{ display: 'block' }}
                   >
                     Submit Your Recipe
-                    <ArrowRight size={20} />
-                  </button>
+                  </a>
                 </div>
                 <div className="relative h-80 lg:h-auto order-1 lg:order-2">
-                  <ImageWithFallback
-                    src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800"
+              <ImageWithFallback
+                src="https://images.unsplash.com/photo-1603554593710-89285666b691?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    // src="https://images.unsplash.com/photo-1619193100179-af4cc742ed3e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D"
                     alt="Recipe sharing"
                     className="w-full h-full object-cover img-services"
                   />
@@ -479,10 +523,10 @@ export default function HomePage({
             </div>
 
             {/* Vendor Partnership Panel */}
-            <div className="bg-white rounded-2xl overflow-hidden shadow-xl"  style={{ marginBottom: '50px' }}>
+            <div className="bg-white rounded-2xl overflow-hidden shadow-xl"  style={{ marginBottom: '80px' }}>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 <div className="relative h-80 lg:h-auto">
-                  <ImageWithFallback
+              <ImageWithFallback
                     src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800"
                     alt="Vendor partnership"
                     className="w-full h-full object-cover img-services"
@@ -529,13 +573,15 @@ export default function HomePage({
                       <span className="text-gray-700">Spice Merchants Welcome</span>
                     </div>
                   </div>
-                  <button
-                    onClick={onNavigateToVendor}
+                  <a
+                    href={googleFormUrls.vendor}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-4 rounded-lg hover:from-green-700 hover:to-green-800 transition-all flex items-center justify-center gap-2 font-semibold text-lg w-full sm:w-auto"
                   >
                     Partner With Us
                     <ArrowRight size={20} />
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>

@@ -1,11 +1,9 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Sparkles, Gift, Percent, Calendar, Star, ArrowRight } from "lucide-react";
+import { buildGoogleFormUrl, config } from "../config";
 
-interface FestivalOffersPageProps {
-  onNavigateToSubscription?: () => void;
-}
-
-export default function FestivalOffersPage({ onNavigateToSubscription }: FestivalOffersPageProps) {
+export default function FestivalOffersPage() {
+  const googleFormURL = buildGoogleFormUrl(config.forms.subscription);
   const specialOffers = [
     {
       id: 1,
@@ -198,16 +196,17 @@ export default function FestivalOffersPage({ onNavigateToSubscription }: Festiva
           <p className="text-white/90 text-base md:text-lg lg:text-xl mb-8 max-w-2xl mx-auto">
             Subscribe now and enjoy delicious meals with amazing discounts!
           </p>
-          <button 
-            onClick={onNavigateToSubscription}
+          <a
+            href={googleFormURL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-yellow-400 text-gray-900 px-8 md:px-12 py-4 md:py-5 rounded-full hover:bg-yellow-500 transition-all shadow-lg text-base md:text-lg font-semibold flex items-center gap-2 mx-auto"
           >
             Subscribe Now
             <ArrowRight size={20} />
-          </button>
+          </a>
         </div>
       </section>
     </div>
   );
 }
-

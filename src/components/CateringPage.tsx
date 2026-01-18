@@ -1,9 +1,24 @@
+import { useEffect, useRef } from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import CateringForm from "./CateringForm";
 import { Utensils, Users, Calendar, Award, CheckCircle } from "lucide-react";
 import { config } from "../config";
 
 export default function CateringPage() {
+  const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Scroll to top first, then to form when page loads
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    
+    const timer = setTimeout(() => {
+      if (formRef.current) {
+        formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
   const features = [
     {
       icon: <Utensils className="text-green-600" size={32} />,
@@ -156,16 +171,15 @@ export default function CateringPage() {
       </section>
 
       {/* Form Section */}
-      <section className="py-16 bg-gradient-to-br from-green-50 to-gray-50">
+      <section ref={formRef} id="catering-form" className="py-16 bg-gradient-to-br from-green-50 to-gray-50 scroll-mt-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h2 className="text-green-700 text-3xl md:text-4xl mb-4 font-bold">Request a Quote</h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Fill out the form below and we'll get back to you with a customized quote for your event
+              Click the button below to open our Google Form and request a customized quote for your event.
             </p>
           </div>
           <CateringForm 
-            restaurantWhatsApp={config.restaurantWhatsApp} 
             googleFormId={config.forms.catering}
           />
         </div>
@@ -173,4 +187,3 @@ export default function CateringPage() {
     </div>
   );
 }
-

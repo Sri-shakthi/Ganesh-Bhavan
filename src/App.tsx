@@ -19,11 +19,7 @@ export default function App() {
       case "home":
         return (
           <HomePage 
-            onNavigateToSubscription={() => setCurrentPage("subscription")} 
             onNavigateToOffers={() => setCurrentPage("offers")}
-            onNavigateToCatering={() => setCurrentPage("catering")}
-            onNavigateToVendor={() => setCurrentPage("vendor")}
-            onNavigateToRecipe={() => setCurrentPage("recipe")}
           />
         );
       case "menu":
@@ -35,7 +31,7 @@ export default function App() {
       case "subscription":
         return <SubscriptionPage />;
       case "offers":
-        return <FestivalOffersPage onNavigateToSubscription={() => setCurrentPage("subscription")} />;
+        return <FestivalOffersPage />;
       case "catering":
         return <CateringPage />;
       case "vendor":
@@ -45,11 +41,7 @@ export default function App() {
       default:
         return (
           <HomePage 
-            onNavigateToSubscription={() => setCurrentPage("subscription")} 
             onNavigateToOffers={() => setCurrentPage("offers")}
-            onNavigateToCatering={() => setCurrentPage("catering")}
-            onNavigateToVendor={() => setCurrentPage("vendor")}
-            onNavigateToRecipe={() => setCurrentPage("recipe")}
           />
         );
     }

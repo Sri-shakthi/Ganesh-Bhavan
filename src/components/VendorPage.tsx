@@ -162,11 +162,10 @@ export default function VendorPage() {
           <div className="text-center mb-8">
             <h2 className="text-green-700 text-3xl md:text-4xl mb-4 font-bold">Get In Touch</h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Fill out the form below and we'll contact you to discuss partnership opportunities
+              Click the button below to open our Google Form for partnership opportunities.
             </p>
           </div>
           <VendorForm 
-            restaurantWhatsApp={config.restaurantWhatsApp} 
             googleFormId={config.forms.vendor}
           />
         </div>
@@ -174,4 +173,3 @@ export default function VendorPage() {
     </div>
   );
 }
-

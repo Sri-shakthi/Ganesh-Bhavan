@@ -80,3 +80,55 @@
   }
 }
 
+/* Carousel Styles - Uniform dimensions and smooth transitions */
+.carousel-container {
+  overflow: hidden;
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  width: 100%;
+  height: 320px;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Smooth carousel transitions */
+[data-slot="carousel-content"] {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ensure uniform carousel item dimensions */
+[data-slot="carousel-item"] > div {
+  width: 100%;
+  height: 320px;
+  min-height: 320px;
+  max-height: 320px;
+}
+
+/* Responsive carousel heights */
+@media (max-width: 768px) {
+  .carousel-item,
+  .carousel-image,
+  [data-slot="carousel-item"] > div {
+    height: 280px;
+    min-height: 280px;
+    max-height: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-item,
+  .carousel-image,
+  [data-slot="carousel-item"] > div {
+    height: 250px;
+    min-height: 250px;
+    max-height: 250px;
+  }
+}
+
